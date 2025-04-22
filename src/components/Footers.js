@@ -1,10 +1,9 @@
 import React from "react";
-import styles from './Footers.module.css';
-
-const Footers = () => {
-    return (
-        <div>Elaborado por: Marcelo T. Boer</div>
-    )
+//import styles from "./Footers.module.css";
+const Footer = () => {
+   return (
+      <div>Elaborado por: Wendell </div>
+   )
 }
-
-export default Footers;
+ 
+export default Footer;
