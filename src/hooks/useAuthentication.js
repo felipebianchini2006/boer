@@ -1,4 +1,5 @@
-import { getAuth, 
+import {
+    getAuth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     updateProfile,
@@ -6,7 +7,7 @@ import { getAuth,
 } from "firebase/auth";
 import { useState, useEffect } from 'react';
 import { db } from '../firebase/connection';
-
+ 
 export const useAuthentication = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(null);
@@ -18,9 +19,10 @@ export const useAuthentication = () => {
             return;
         }
     }
+    //método para criar o usuário
     const createUser = async (data) => {
-        checkIfIsCancelled()
-        setLoading(true)
+        checkIfIsCancelled();
+        setLoading(true);
         setError(null);
  
         try {
@@ -35,7 +37,7 @@ export const useAuthentication = () => {
         }
         catch (error) {
             let systemErrorMessage;
-            if (error.message.includes("Password ")){
+            if (error.message.includes("Password")){
                 systemErrorMessage = "A senha precisa conter pelo menos 6 caracteres";
             }
             else if(error.message.includes("email-already")){
@@ -48,15 +50,15 @@ export const useAuthentication = () => {
         }
         setLoading(false);
     }
-
-    useEffect(() => {
-        return() => setCancelled(true);
-    },[]);
-
-    return {
+ 
+    useEffect (() => {
+        return()  => setCancelled(true);
+      },[]);
+ 
+      return {
         auth,
         createUser,
         error,
         loading,
-    }
+      }
 }
