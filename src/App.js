@@ -8,6 +8,7 @@ import Contact from "./screens/Contact";
 import About from "./screens/About";
 import NavBar from "./components/NavBar";
 import Cadastrar from './screens/Register';
+import StoreRegister from './screens/StoreRegister';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/register" element={<Cadastrar />} />
             <Route path="/contact" element={<Contact />} />
             <Route path='/about' element={<About />} />
+            <Route path="/store-register" element={<StoreRegister />} />
           </Routes>
         </div>
       </BrowserRouter>
