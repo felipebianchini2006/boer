@@ -55,39 +55,7 @@ export const useAuthentication = () => {
     }
 
     const login = async (data) => {
-        checkIfIsCancelled()
-        setLoading(true)
-        setError(false)
 
-        try {
-            await signInWithEmailAndPassword(auth, data.email, data.password)
-
-        } catch (error) {
-            let systemErrorMessage;
-
-            if (error.message.includes("user-not-found")) {
-                systemErrorMessage = "Usuário não Cadastrado"
-            } else if (error.message.includes("wrong-password")) {
-                systemErrorMessage = "Senha Incorreta"
-            }
-            else {
-                systemErrorMessage = "Ocorreu um erro, por favor tente mais tarde"
-            }
-            setError(systemErrorMessage)
-        } finally {
-            setLoading(false)
-        }
-    }
-
-    useEffect(() => {
-        return () => setCancelled(true);
-    }, []);
-
-    return {
-        auth,
-        createUser,
-        error,
-        loading,
         login
     }
 }
