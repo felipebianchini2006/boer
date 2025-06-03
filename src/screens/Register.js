@@ -4,9 +4,9 @@ import { useAuthentication } from '../hooks/useAuthentication';
 
 const Register = () => {
   const [displayName, setName] = useState('');
-  const [displayEmail, setEmail] = useState('');
-  const [displayPassword, setPassword] = useState('');
-  const [displayConfirm, setConfirm] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
 
   const { createUser, error: AuthError, loading } = useAuthentication();
@@ -15,15 +15,15 @@ const Register = () => {
     e.preventDefault();
     setError('');
 
-    if (displayPassword !== displayConfirm) {
+    if (password !== confirmPassword) {
       setError('As senhas precisam ser iguais!');
       return;
     }
 
     const user = {
       displayName,
-      email: displayEmail,
-      password: displayPassword,
+      email,
+      password
     };
 
     await createUser(user);
@@ -56,7 +56,7 @@ const Register = () => {
           <input
             type="email"
             name="email"
-            value={displayEmail}
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
             placeholder="E-mail"
@@ -68,7 +68,7 @@ const Register = () => {
           <input
             type="password"
             name="password"
-            value={displayPassword}
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
             placeholder="Senha"
@@ -80,8 +80,8 @@ const Register = () => {
           <input
             type="password"
             name="confirmPassword"
-            value={displayConfirm}
-            onChange={(e) => setConfirm(e.target.value)}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             required
             placeholder="Repetir Senha"
           />
