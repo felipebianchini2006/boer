@@ -1,75 +1,62 @@
 import { useState, useEffect } from 'react';
 import { useAuthentication } from '../hooks/useAuthentication';
-import styles from './Login.module.css';
+import { useNavigate } from 'react-router-dom'; // Importando navegação
+
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const { login, error: authError, loading } = useAuthentication();
+    const [displayEmail, setEmail] = useState('');
+    const [displayPassword, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const { login, error: authError, loading } = useAuthentication();
+    const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    const user = {
-      email,
-      password,
-    };
+        setError("")
 
-    await login(user);
-  };
-
-  useEffect(() => {
-    if (authError) {
-      setError(authError);
+        const user = {
+            email: displayEmail,
+            password: displayPassword
+        }
+        const res = await login(user, navigate); // Enviando navigate para o hook
     }
-  }, [authError]);
 
-  return (
-    <div className={styles.container}>
-      <h2>Faça seu login</h2>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <label className={styles.label}>
-          <span>E-mail:</span>
-          <input
-            type="email"
-            name="email"
-            required
-            placeholder="E-mail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className={styles.input}
-          />
-        </label>
-        
-        <label className={styles.label}>
-          <span>Senha:</span>
-          <input
-            type="password"
-            name="password"
-            required
-            placeholder="Senha"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className={styles.input}
-          />
-        </label>
-        
-        {!loading ? (
-          <button type="submit" className={styles.btn}>
-            Entrar
-          </button>
-        ) : (
-          <button className={styles.btn} disabled>
-            Aguarde...
-          </button>
-        )}
-        
-        {error && <p className={styles.error}>{error}</p>}
-      </form>
-    </div>
-  );
-};
+    useEffect(() => {
+        if (authError) {
+            setError(authError);
+        }
+    }, [authError]);
 
-export default Login;
+    return (
+        <div>
+            <h2><center>Entrar</center></h2>
+            <p><center>Faça login</center></p>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    <span>
+                        E-mail:
+                    </span>
+                    <input type="email" name="displayEmail" required placeholder="E-mail"
+                        value={displayEmail}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </label>
+                <label>
+                    <span>
+                        Senha:
+                    </span>
+                    <input type="password" name="displayPasword" required placeholder="Senha"
+                        value={displayPassword}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </label>
+                <center>{!loading && <button className="btn">Logar</button>}</center>
+                <center>{loading && <button className="btn" disabled>Aguarde...</button>}</center>
+                <center>{error && <p className="error">{error}</p>}</center>
+            </form>
+        </div>
+    )
+}
+
+export default Login
